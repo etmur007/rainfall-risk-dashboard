@@ -26,9 +26,9 @@ wells = wells_df.drop_duplicates(subset='coords')
 # ------------------------------
 # Define date range: past 7 days
 # ------------------------------
-today = datetime.date.today()
-start_date = today - datetime.timedelta(days=7)
-end_date = today
+# TEST RANGE: Full month of January 2024
+start_date = datetime.date(2024, 1, 1)
+end_date = datetime.date(2024, 1, 31)
 
 # ------------------------------
 # Fetch rainfall + predict risk
