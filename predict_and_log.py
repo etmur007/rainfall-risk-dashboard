@@ -11,7 +11,7 @@ import json
 SERVICE_ACCOUNT = os.getenv("SERVICE_ACCOUNT")
 KEY_JSON = os.getenv("KEY_JSON")
 
-credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, key_data=json.loads(KEY_JSON))
+credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, key_data=KEY_JSON)
 ee.Initialize(credentials)
 
 # ------------------------------
