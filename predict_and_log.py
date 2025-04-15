@@ -76,6 +76,15 @@ def fetch_rainfall(twp_id, name, coords):
         return None
 
 # ------------------------------
+# Collect data from all wells
+# ------------------------------
+all_data = []
+for _, row in wells.iterrows():
+    df = fetch_rainfall(row['twp_id'], row['name'], row['coords'])
+    if df is not None:
+        all_data.append(df)
+
+# ------------------------------
 # Predict and save
 # ------------------------------
 if all_data:
