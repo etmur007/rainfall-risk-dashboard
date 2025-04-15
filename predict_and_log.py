@@ -50,9 +50,19 @@ def fetch_rainfall(twp_id, name, coords):
             return ee.Feature(None, {'date': date, 'precipitation': value})
 
         features = chirps.map(extract).getInfo()
-        data = [{'date': f['properties']['date'], 'rainfall': f['properties']['precipitation']} for f in features['features']]
-        df = pd.DataFrame(data)
-        df['rainfall'] = pd.to_numeric(df['rainfall'], errors='coerce')
+if 'features' not in features or not features['features']:
+    return None  # no data found
+
+data = []
+for f in features['features']:
+    props = f.get('properties', {})
+    data.append({
+        'date': props.get('date'),
+        'rainfall': props.get('precipitation')
+    })
+
+df = pd.DataFrame(data)
+df['rainfall'] = pd.to_numeric(df['rainfall'], errors='coerce')
         df['date'] = pd.to_datetime(df['date'])
         df['twp_id'] = twp_id
         df['name'] = name
