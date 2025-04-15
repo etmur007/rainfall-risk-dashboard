@@ -11,8 +11,7 @@ import json
 SERVICE_ACCOUNT = st.secrets["SERVICE_ACCOUNT"]
 KEY_JSON = st.secrets["KEY_JSON"]
 
-credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, key_data=json.loads(KEY_JSON))
-ee.Initialize(credentials)
+credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, key_data=KEY_JSON)
 
 # ----------------------------------------
 # Load Cleaned ASDF Wells (222 unique)
