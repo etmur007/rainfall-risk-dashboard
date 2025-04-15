@@ -89,7 +89,7 @@ for _, row in wells.iterrows():
 # ------------------------------
 if all_data:
     df = pd.concat(all_data)
-    df['failure_risk'] = model.predict_proba(df[['rainfall']].fillna(0))[:, 1]
+    df['failure_risk'] = model.predict_proba(df[['rainfall']].fillna(0))
 
     def label_risk(r):
         if r >= 0.75: return 'High'
