@@ -6,10 +6,12 @@ import datetime
 # ----------------------------------------
 # Earth Engine authentication
 # ----------------------------------------
-SERVICE_ACCOUNT = 'streamlit-earthengine@rainfall-functionality-predict.iam.gserviceaccount.com'
-KEY_FILE = '/Users/tom/Downloads/rainfall-functionality-predict-09d4d7813c05.json'
+import json
 
-credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, KEY_FILE)
+SERVICE_ACCOUNT = st.secrets["SERVICE_ACCOUNT"]
+KEY_JSON = st.secrets["KEY_JSON"]
+
+credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, key_data=json.loads(KEY_JSON))
 ee.Initialize(credentials)
 
 # ----------------------------------------
