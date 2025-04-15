@@ -50,19 +50,19 @@ def fetch_rainfall(twp_id, name, coords):
             return ee.Feature(None, {'date': date, 'precipitation': value})
 
         features = chirps.map(extract).getInfo()
-if 'features' not in features or not features['features']:
-    return None  # no data found
+        if 'features' not in features or not features['features']:
+            return None  # No data found
 
-data = []
-for f in features['features']:
-    props = f.get('properties', {})
-    data.append({
-        'date': props.get('date'),
-        'rainfall': props.get('precipitation')
-    })
+        data = []
+        for f in features['features']:
+            props = f.get('properties', {})
+            data.append({
+                'date': props.get('date'),
+                'rainfall': props.get('precipitation')
+            })
 
-df = pd.DataFrame(data)
-df['rainfall'] = pd.to_numeric(df['rainfall'], errors='coerce')
+        df = pd.DataFrame(data)
+        df['rainfall'] = pd.to_numeric(df['rainfall'], errors='coerce')
         df['date'] = pd.to_datetime(df['date'])
         df['twp_id'] = twp_id
         df['name'] = name
@@ -70,15 +70,10 @@ df['rainfall'] = pd.to_numeric(df['rainfall'], errors='coerce')
         df['lat'] = coords[1]
         df['rolling_7d'] = df['rainfall'].rolling(7).sum()
         return df.tail(1)  # latest record only
+
     except Exception as e:
         print(f"Error fetching for {name}: {e}")
         return None
-
-all_data = []
-for _, row in wells.iterrows():
-    df = fetch_rainfall(row['twp_id'], row['name'], row['coords'])
-    if df is not None:
-        all_data.append(df)
 
 # ------------------------------
 # Predict and save
